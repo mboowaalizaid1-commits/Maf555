@@ -27,5 +27,12 @@ workflows:
           cat android/gradle.properties
           cd android
           ./gradlew assembleRelease --stacktrace 2>&1 | tail -150
+          - name: Build APK
+        script: |
+          cd android
+          ./gradlew assembleRelease
+          echo "=== Finding APK ==="
+          find . -name "*.apk" 2>/dev/null
     artifacts:
-      - android/app/build/outputs/apk/release/*.apk
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.aab
