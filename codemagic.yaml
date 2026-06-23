@@ -12,20 +12,14 @@ workflows:
         script: npx expo prebuild --platform android --clean
       - name: Fix kotlinVersion
         script: |
-          echo "=== build.gradle contents ==="
-          cat android/build.gradle
           if grep -q "ext {" android/build.gradle; then
             sed -i 's/ext {/ext {\n        kotlinVersion = "2.1.20"/' android/build.gradle
           else
             sed -i 's/buildscript {/buildscript {\n    ext {\n        kotlinVersion = "2.1.20"\n    }/' android/build.gradle
           fi
-          echo "=== Fixed build.gradle ==="
-          cat android/build.gradle
-     - name: Build APK
+      - name: Build APK
         script: |
-          echo "=== android/build.gradle ==="
           cat android/build.gradle
-          echo "=== gradle.properties ==="
           cat android/gradle.properties
           cd android
           ./gradlew assembleRelease --stacktrace 2>&1 | tail -150
