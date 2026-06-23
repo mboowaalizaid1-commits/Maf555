@@ -21,9 +21,13 @@ workflows:
           fi
           echo "=== Fixed build.gradle ==="
           cat android/build.gradle
-      - name: Build APK
+     - name: Build APK
         script: |
+          echo "=== android/build.gradle ==="
+          cat android/build.gradle
+          echo "=== gradle.properties ==="
+          cat android/gradle.properties
           cd android
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease --stacktrace 2>&1 | tail -150
     artifacts:
       - android/app/build/outputs/apk/release/*.apk
