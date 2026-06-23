@@ -1,0 +1,21 @@
+workflows:
+  android-apk:
+    name: Android APK
+    max_build_duration: 60
+    environment:
+      node: 18.20.0
+      java: 17
+    scripts:
+      - name: Install deps
+        script: npm install --ignore-scripts
+      - name: Prebuild
+        script: npx expo prebuild --platform android --clean
+      - name: Fix kotlinVersion
+        script: |
+          sed -i 's/classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")/classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")/' android/build.gradle
+      - name: Build APK
+        script: |
+          cd android
+          ./gradlew assembleRelease
+    artifacts:
+      - android/app/build/outputs/apk/release/*.apk
