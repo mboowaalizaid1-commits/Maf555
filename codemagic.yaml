@@ -31,5 +31,5 @@ workflows:
           - mboowaalizaid1@gmail.com
         notify:
           success: true
-      groups:
+      tester_groups:
         - maf5
