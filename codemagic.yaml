@@ -29,7 +29,7 @@ workflows:
       email:
         recipients:
           - mboowaalizaid1@gmail.com
-        groups:
-          - maf5
         notify:
           success: true
+      groups:
+        - maf5
